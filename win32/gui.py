@@ -302,7 +302,7 @@ class PropertiesWidget(QWidget):
         collector_status = CollectorStatus.load_latest_status()
 
         self.editor.set_text(dogstatsd_status)
-        log_file.content = self.editor.toPlainText().__str__()
+        status.content = self.editor.toPlainText().__str__()
 
 
         self.disable_button.setEnabled(False)
