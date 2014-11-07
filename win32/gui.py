@@ -35,9 +35,11 @@ spyderlib.baseconfig.IMG_PATH = [""]
 from util import get_os, yLoader
 from config import (get_confd_path, get_config_path, get_config,
     _windows_commondata_path)
+from checks.check_status import DogstatsdStatus, ForwarderStatus, CollectorStatus, logger_info
 
 # 3rd Party
 import yaml
+
 
 EXCLUDED_WINDOWS_CHECKS = [
     'cacti', 'directory', 'docker', 'gearmand',
@@ -292,6 +294,24 @@ class PropertiesWidget(QWidget):
         self.enable_button.setEnabled(False)
         self.editor.go_to_line(len(log_file.content.splitlines()))
 
+    def display_status(self, status):
+        self.current_file = status
+
+        dogstatsd_status = DogstatsdStatus.load_latest_status()
+        forwarder_status = ForwarderStatus.load_latest_status()
+        collector_status = CollectorStatus.load_latest_status()
+
+        self.editor.set_text(dogstatsd_status)
+        log_file.content = self.editor.toPlainText().__str__()
+
+
+        self.disable_button.setEnabled(False)
+        self.enable_button.setEnabled(False)
+
+
+
+
+
 
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
@@ -307,6 +327,8 @@ class MainWindow(QSplitter):
         checks = get_checks()
         datadog_conf = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
         self.log_file = LogFile()
+
+        self.status = "Test"
 
         listwidget = QListWidget(self)
         listwidget.addItems([osp.basename(check.module_name).replace("_", " ").title() for check in checks])
@@ -333,6 +355,9 @@ class MainWindow(QSplitter):
 
         self.connect(self.properties.view_log_button, SIGNAL('clicked()'),
                      lambda: self.properties.set_log_file(self.log_file))
+
+        self.connect(self.properties.status_button, SIGNAL('clicked()'),
+                     lambda: self.properties.display_status(self.status))
 
         self.manager_menu = Menu(self)
         self.connect(self.properties.menu_button, SIGNAL("clicked()"),
