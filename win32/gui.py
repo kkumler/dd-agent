@@ -35,7 +35,7 @@ spyderlib.baseconfig.IMG_PATH = [""]
 from util import get_os, yLoader
 from config import (get_confd_path, get_config_path, get_config,
     _windows_commondata_path)
-from checks.check_status import DogstatsdStatus, ForwarderStatus, CollectorStatus, logger_info
+from checks.check_status import DogstatsdStatus, ForwarderStatus, CollectorStatus, logger_info, AgentStatus
 
 # 3rd Party
 import yaml
@@ -53,6 +53,8 @@ MAIN_WINDOW_TITLE = "Datadog Agent Manager"
 DATADOG_SERVICE = "DatadogAgent"
 
 AGENT_LOG_FILE = osp.join(_windows_commondata_path(), 'Datadog', 'logs', 'ddagent.log')
+
+AGENT_STATUS = os.path.join(tempfile.gettempdir(), cls.__name__ + '.pickle')
 
 HUMAN_SERVICE_STATUS = {
     win32service.SERVICE_RUNNING : 'Service is running',
@@ -181,7 +183,7 @@ class AgentCheck(EditorFile):
 
 class AgentStatus(EditorFile):
     def __init__(self):
-        EditorFile.__init__(self, AGENT_LOG_FILE, "Agent Status Page")
+        EditorFile.__init__(self, AGENT_STATUS, "Agent Status Page")
 
 class PropertiesWidget(QWidget):
     def __init__(self, parent):
