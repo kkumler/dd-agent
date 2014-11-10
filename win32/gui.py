@@ -10,6 +10,7 @@ import os
 import os.path as osp
 import webbrowser
 import thread # To manage the windows process asynchronously
+import tempfile
 
 import win32serviceutil
 import win32service
@@ -54,7 +55,7 @@ DATADOG_SERVICE = "DatadogAgent"
 
 AGENT_LOG_FILE = osp.join(_windows_commondata_path(), 'Datadog', 'logs', 'ddagent.log')
 
-AGENT_STATUS = os.path.join(tempfile.gettempdir(), cls.__name__ + '.pickle')
+AGENT_STATUS = os.path.join(tempfile.gettempdir(), 'Collector.pickle')
 
 HUMAN_SERVICE_STATUS = {
     win32service.SERVICE_RUNNING : 'Service is running',
