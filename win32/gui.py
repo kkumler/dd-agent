@@ -11,6 +11,7 @@ import os.path as osp
 import webbrowser
 import thread # To manage the windows process asynchronously
 import tempfile
+import logging
 
 import win32serviceutil
 import win32service
@@ -40,6 +41,7 @@ from checks.check_status import DogstatsdStatus, ForwarderStatus, CollectorStatu
 
 # 3rd Party
 import yaml
+log = logging.getLogger(__name__)
 
 
 EXCLUDED_WINDOWS_CHECKS = [
@@ -306,7 +308,7 @@ class PropertiesWidget(QWidget):
         self.desc_label.setText(status.get_description())
         try:
             dogstatsd_status = DogstatsdStatus.load_latest_status()
-            forwarder_status = ForwarderStatus.load_latest_status()
+            # forwarder_status = ForwarderStatus.print_latest_status()
             collector_status = CollectorStatus.load_latest_status()
             a = True
         except Exception:
@@ -314,6 +316,8 @@ class PropertiesWidget(QWidget):
             self.disable_button.setEnabled(True)
             self.enable_button.setEnabled(True)
 
+        log.info(dogstatsd_status)
+        log.info(ForwarderStatus.print_latest_status)
         self.editor.set_text(dogstatsd_status)
         status.content = self.editor.toPlainText().__str__()
 
