@@ -314,7 +314,7 @@ class PropertiesWidget(QWidget):
             self.disable_button.setEnabled(True)
             self.enable_button.setEnabled(True)
 
-        self.editor.set_text('test_string')
+        self.editor.set_text(dogstatsd_status)
         status.content = self.editor.toPlainText().__str__()
 
         if a:
