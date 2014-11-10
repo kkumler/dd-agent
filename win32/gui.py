@@ -179,6 +179,10 @@ class AgentCheck(EditorFile):
         check_yaml_syntax(content)
         EditorFile.save(self, content)
 
+class AgentStatus(EditorFile):
+    def __init__(self):
+        EditorFile.__init__(self, AGENT_LOG_FILE, "Agent Status Page")
+
 class PropertiesWidget(QWidget):
     def __init__(self, parent):
         QWidget.__init__(self, parent)
@@ -296,22 +300,23 @@ class PropertiesWidget(QWidget):
 
     def display_status(self, status):
         self.current_file = status
+        self.desc_label.setText(status.get_description())
+        try:
+            dogstatsd_status = DogstatsdStatus.load_latest_status()
+            forwarder_status = ForwarderStatus.load_latest_status()
+            collector_status = CollectorStatus.load_latest_status()
+            a = True
+        except Exception:
+            a= False
+            self.disable_button.setEnabled(True)
+            self.enable_button.setEnabled(True)
 
-        dogstatsd_status = DogstatsdStatus.load_latest_status()
-        forwarder_status = ForwarderStatus.load_latest_status()
-        collector_status = CollectorStatus.load_latest_status()
-
-        self.editor.set_text(dogstatsd_status)
+        self.editor.set_text_from_file(status.file_path)
         status.content = self.editor.toPlainText().__str__()
 
-
-        self.disable_button.setEnabled(False)
-        self.enable_button.setEnabled(False)
-
-
-
-
-
+        if a:
+            self.disable_button.setEnabled(False)
+            self.enable_button.setEnabled(False)
 
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
@@ -328,7 +333,7 @@ class MainWindow(QSplitter):
         datadog_conf = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
         self.log_file = LogFile()
 
-        self.status = "Test"
+        self.status = AgentStatus()
 
         listwidget = QListWidget(self)
         listwidget.addItems([osp.basename(check.module_name).replace("_", " ").title() for check in checks])
