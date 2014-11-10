@@ -36,7 +36,7 @@ spyderlib.baseconfig.IMG_PATH = [""]
 from util import get_os, yLoader
 from config import (get_confd_path, get_config_path, get_config,
     _windows_commondata_path)
-from checks.check_status import DogstatsdStatus, ForwarderStatus, CollectorStatus, logger_info, AgentStatus
+from checks.check_status import DogstatsdStatus, ForwarderStatus, CollectorStatus, logger_info
 
 # 3rd Party
 import yaml
@@ -314,7 +314,7 @@ class PropertiesWidget(QWidget):
             self.disable_button.setEnabled(True)
             self.enable_button.setEnabled(True)
 
-        self.editor.set_text_from_file(status.file_path)
+        self.editor.set_text('test_string')
         status.content = self.editor.toPlainText().__str__()
 
         if a:
