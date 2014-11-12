@@ -318,7 +318,7 @@ class PropertiesWidget(QWidget):
 
         log.info(dogstatsd_status)
         log.info(ForwarderStatus.print_latest_status)
-        self.editor.set_text(dogstatsd_status)
+        self.editor.set_text(collector_status.render())
         status.content = self.editor.toPlainText().__str__()
 
         if a:
