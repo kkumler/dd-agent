@@ -320,7 +320,7 @@ class PropertiesWidget(QWidget):
         print "display status"
         log.info(ForwarderStatus.print_latest_status)
 
-        self.editor.set_text(collector_status._get_pickle_path())
+        self.editor.set_text(CollectorStatus._get_pickle_path())
         status.content = self.editor.toPlainText().__str__()
 
         if a:
