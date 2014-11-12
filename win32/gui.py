@@ -306,6 +306,7 @@ class PropertiesWidget(QWidget):
 
     def display_status(self, status):
 
+
         self.current_file = status
         self.desc_label.setText(status.get_description())
         path = "C:/Windows/Temp/" + "CollectorStatus.pickle"
@@ -315,6 +316,7 @@ class PropertiesWidget(QWidget):
             try:
                 log.info("load latest pickle")
                 a = pickle.load(f)
+                a.verbose = None
             finally:
                 f.close()
         except IOError:
