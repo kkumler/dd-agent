@@ -317,8 +317,10 @@ class PropertiesWidget(QWidget):
             self.enable_button.setEnabled(True)
 
         log.info(dogstatsd_status)
+        print "display status"
         log.info(ForwarderStatus.print_latest_status)
-        self.editor.set_text(collector_status.render())
+
+        self.editor.set_text(collector_status._get_pickle_path())
         status.content = self.editor.toPlainText().__str__()
 
         if a:
