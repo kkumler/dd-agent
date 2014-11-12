@@ -305,28 +305,33 @@ class PropertiesWidget(QWidget):
         self.editor.go_to_line(len(log_file.content.splitlines()))
 
     def display_status(self, status):
-
-
         self.current_file = status
         self.desc_label.setText(status.get_description())
-        path = "C:/Windows/Temp/" + "CollectorStatus.pickle"
 
+        message = self.load_status("CollectorStatus")
+        message = message + self.load_status("DogstatsdStatus")
+        message = message + self.load_status("ForwarderStatus")
+
+        self.editor.set_text(message)
+        status.content = self.editor.toPlainText().__str__()
+
+    def load_status (self, process):
+        path = "C:/Windows/Temp/" + process +".pickle"
         try:
             f = open(path)
             try:
-                log.info("load latest pickle")
                 a = pickle.load(f)
                 a.verbose = None
             finally:
                 f.close()
         except IOError:
-            log.info("Couldn't load latest status")
             return None
 
         message = a.render()
 
-        self.editor.set_text(message)
-        status.content = self.editor.toPlainText().__str__()
+        return message
+
+
 
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
