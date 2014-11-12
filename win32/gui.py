@@ -307,11 +307,13 @@ class PropertiesWidget(QWidget):
     def display_status(self, status):
         self.current_file = status
         self.desc_label.setText(status.get_description())
-
-        message = self.load_status("CollectorStatus")
-        message = message + self.load_status("DogstatsdStatus")
-        message = message + self.load_status("ForwarderStatus")
-
+        message = ""
+        try:
+            message = message + self.load_status("CollectorStatus")
+            message = message + self.load_status("DogstatsdStatus")
+            message = message + self.load_status("ForwarderStatus")
+        except Exception:
+            message = message + "=======Unable to Show Status======= "
         self.editor.set_text(message)
         status.content = self.editor.toPlainText().__str__()
 
@@ -328,7 +330,6 @@ class PropertiesWidget(QWidget):
             return None
 
         message = a.render()
-
         return message
 
 
