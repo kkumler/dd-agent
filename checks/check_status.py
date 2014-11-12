@@ -121,6 +121,8 @@ class AgentStatus(object):
             log.debug("Persisting status to %s" % path)
             f = open(path, 'w')
             try:
+                log.info("Pickling file now")
+                log.info(f)
                 pickle.dump(self, f)
             finally:
                 f.close()
@@ -210,6 +212,7 @@ class AgentStatus(object):
         try:
             f = open(cls._get_pickle_path())
             try:
+                log.info("load latest pickle")
                 return pickle.load(f)
             finally:
                 f.close()
@@ -233,8 +236,11 @@ class AgentStatus(object):
         exit_code = -1
 
         module_status = cls.load_latest_status()
+        log.info("Print the latest status")
         if module_status:
             message = module_status.render()
+            log.info('here is the message')
+            log.info(message)
             exit_code = 0
             if module_status.has_error():
                 exit_code = 1
@@ -244,6 +250,7 @@ class AgentStatus(object):
 
     @classmethod
     def _get_pickle_path(cls):
+        log.info("the pickle path")
         return os.path.join(tempfile.gettempdir(), cls.__name__ + '.pickle')
 
 
@@ -450,7 +457,7 @@ class CollectorStatus(AgentStatus):
 
                     check_lines += [
                         "    - Collected %s metric%s, %s event%s & %s service check%s" % (
-                            cs.metric_count, plural(cs.metric_count), 
+                            cs.metric_count, plural(cs.metric_count),
                             cs.event_count, plural(cs.event_count),
                             cs.service_check_count, plural(cs.service_check_count)),
                     ]
