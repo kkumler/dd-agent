@@ -42,6 +42,7 @@ from checks.check_status import DogstatsdStatus, ForwarderStatus, CollectorStatu
 # 3rd Party
 import yaml
 log = logging.getLogger(__name__)
+import pickle
 
 
 EXCLUDED_WINDOWS_CHECKS = [
@@ -304,28 +305,26 @@ class PropertiesWidget(QWidget):
         self.editor.go_to_line(len(log_file.content.splitlines()))
 
     def display_status(self, status):
+
         self.current_file = status
         self.desc_label.setText(status.get_description())
+        path = "C:/Windows/Temp/" + "CollectorStatus.pickle"
+
         try:
-            dogstatsd_status = DogstatsdStatus.load_latest_status()
-            # forwarder_status = ForwarderStatus.print_latest_status()
-            collector_status = CollectorStatus.load_latest_status()
-            a = True
-        except Exception:
-            a= False
-            self.disable_button.setEnabled(True)
-            self.enable_button.setEnabled(True)
+            f = open(path)
+            try:
+                log.info("load latest pickle")
+                a = pickle.load(f)
+            finally:
+                f.close()
+        except IOError:
+            log.info("Couldn't load latest status")
+            return None
 
-        log.info(dogstatsd_status)
-        print "display status"
-        log.info(ForwarderStatus.print_latest_status)
+        message = a.render()
 
-        self.editor.set_text(CollectorStatus._get_pickle_path())
+        self.editor.set_text(message)
         status.content = self.editor.toPlainText().__str__()
-
-        if a:
-            self.disable_button.setEnabled(False)
-            self.enable_button.setEnabled(False)
 
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
