@@ -12,6 +12,7 @@ import webbrowser
 import thread # To manage the windows process asynchronously
 import tempfile
 import logging
+import pickle
 
 import win32serviceutil
 import win32service
@@ -41,8 +42,9 @@ from checks.check_status import DogstatsdStatus, ForwarderStatus, CollectorStatu
 
 # 3rd Party
 import yaml
+
 log = logging.getLogger(__name__)
-import pickle
+
 
 
 EXCLUDED_WINDOWS_CHECKS = [
@@ -187,7 +189,7 @@ class AgentCheck(EditorFile):
 
 class AgentStatus(EditorFile):
     def __init__(self):
-        EditorFile.__init__(self, AGENT_STATUS, "Agent Status Page")
+        EditorFile.__init__(self, None, "Agent Status Page")
 
 class PropertiesWidget(QWidget):
     def __init__(self, parent):
@@ -312,8 +314,9 @@ class PropertiesWidget(QWidget):
             message = message + self.load_status("CollectorStatus")
             message = message + self.load_status("DogstatsdStatus")
             message = message + self.load_status("ForwarderStatus")
+            message = message + tempfile.gettempdir()
         except Exception:
-            message = message + "=======Unable to Show Status======= "
+            message = message + "=======Unable to Show Status======="
         self.editor.set_text(message)
         status.content = self.editor.toPlainText().__str__()
 
@@ -331,8 +334,6 @@ class PropertiesWidget(QWidget):
 
         message = a.render()
         return message
-
-
 
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
