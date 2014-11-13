@@ -250,7 +250,7 @@ class PropertiesWidget(QWidget):
         self.menu_button = QPushButton(get_icon("settings.png"),
                                       "Manager", self)
 
-
+'C:\\Users\\Administrator\\AppData\\Roaming'
 
         hlayout = QHBoxLayout()
         hlayout.addWidget(self.save_button)
@@ -311,12 +311,9 @@ class PropertiesWidget(QWidget):
         self.desc_label.setText(status.get_description())
         message = ""
         try:
-            # message = message + self.load_status("CollectorStatus")
-            # message = message + self.load_status("DogstatsdStatus")
-            # message = message + self.load_status("ForwarderStatus")
-            # message = message + tempfile.gettempdir()
-            message = message + CollectorStatus._get_pickle_path()
-            message = message + CollectorStatus.load_latest_status()
+            message = message + self.load_status("CollectorStatus")
+            message = message + self.load_status("DogstatsdStatus")
+            message = message + self.load_status("ForwarderStatus")
 
         except Exception:
             message = message + "=======Unable to Show Status======="
@@ -324,7 +321,8 @@ class PropertiesWidget(QWidget):
         status.content = self.editor.toPlainText().__str__()
 
     def load_status (self, process):
-        path = "C:/Windows/Temp/" + process +".pickle"
+        # path = "C:/Windows/Temp/" + process +".pickle"
+        path = osp.join(_windows_commondata_path(), 'Datadog', process + '.pickle')
         try:
             f = open(path)
             try:
