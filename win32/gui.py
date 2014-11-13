@@ -311,10 +311,13 @@ class PropertiesWidget(QWidget):
         self.desc_label.setText(status.get_description())
         message = ""
         try:
-            message = message + self.load_status("CollectorStatus")
-            message = message + self.load_status("DogstatsdStatus")
-            message = message + self.load_status("ForwarderStatus")
-            message = message + tempfile.gettempdir()
+            # message = message + self.load_status("CollectorStatus")
+            # message = message + self.load_status("DogstatsdStatus")
+            # message = message + self.load_status("ForwarderStatus")
+            # message = message + tempfile.gettempdir()
+            message = message + CollectorStatus._get_pickle_path()
+            message = message + CollectorStatus.load_latest_status()
+
         except Exception:
             message = message + "=======Unable to Show Status======="
         self.editor.set_text(message)
