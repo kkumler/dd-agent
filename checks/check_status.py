@@ -251,7 +251,7 @@ class AgentStatus(object):
     @classmethod
     def _get_pickle_path(cls):
         log.info("the pickle path")
-        return os.path.join(os.environ['APPDATA'], 'Datadog/' + cls.__name__ + '.pickle')
+        return os.path.join(os.environ['APPDATA'], 'Datadog' + cls.__name__ + '.pickle')
 
 
 class InstanceStatus(object):
