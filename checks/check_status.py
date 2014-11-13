@@ -123,8 +123,6 @@ class AgentStatus(object):
             log.debug("Persisting status to %s" % path)
             f = open(path, 'w')
             try:
-                log.info("Pickling file now")
-                log.info(path)
                 pickle.dump(self, f)
             finally:
                 f.close()
@@ -238,11 +236,8 @@ class AgentStatus(object):
         exit_code = -1
 
         module_status = cls.load_latest_status()
-        log.info("Print the latest status")
         if module_status:
             message = module_status.render()
-            log.info('here is the message')
-            log.info(message)
             exit_code = 0
             if module_status.has_error():
                 exit_code = 1
@@ -252,11 +247,8 @@ class AgentStatus(object):
 
     @classmethod
     def _get_pickle_path(cls):
-        log.info("the pickle path")
         path = osp.join(_windows_commondata_path(), 'Datadog', cls.__name__ + '.pickle')
-        log.info(path)
         return path
-        # return os.path.join(os.environ['APPDATA'], 'Datadog', cls.__name__ + '.pickle')
 
 
 class InstanceStatus(object):
