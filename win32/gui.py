@@ -250,8 +250,6 @@ class PropertiesWidget(QWidget):
         self.menu_button = QPushButton(get_icon("settings.png"),
                                       "Manager", self)
 
-'C:\\Users\\Administrator\\AppData\\Roaming'
-
         hlayout = QHBoxLayout()
         hlayout.addWidget(self.save_button)
         hlayout.addStretch()
