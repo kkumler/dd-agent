@@ -122,7 +122,7 @@ class AgentStatus(object):
             f = open(path, 'w')
             try:
                 log.info("Pickling file now")
-                log.info(f)
+                log.info(path)
                 pickle.dump(self, f)
             finally:
                 f.close()
