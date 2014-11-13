@@ -14,9 +14,11 @@ import tempfile
 import traceback
 import time
 from collections import defaultdict
+import os.path as osp
 
 # project
 import config
+from config import _windows_commondata_path
 from util import get_os, plural
 
 # 3rd party
@@ -251,7 +253,10 @@ class AgentStatus(object):
     @classmethod
     def _get_pickle_path(cls):
         log.info("the pickle path")
-        return os.path.join(os.environ['APPDATA'], 'Datadog', cls.__name__ + '.pickle')
+        path = osp.join(_windows_commondata_path(), 'Datadog', cls.__name__ + '.pickle')
+        log.info(path)
+        return path
+        # return os.path.join(os.environ['APPDATA'], 'Datadog', cls.__name__ + '.pickle')
 
 
 class InstanceStatus(object):
