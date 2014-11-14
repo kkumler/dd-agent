@@ -45,8 +45,6 @@ import yaml
 
 log = logging.getLogger(__name__)
 
-
-
 EXCLUDED_WINDOWS_CHECKS = [
     'cacti', 'directory', 'docker', 'gearmand',
     'hdfs', 'kafka_consumer', 'marathon', 'mcache',
@@ -59,8 +57,6 @@ MAIN_WINDOW_TITLE = "Datadog Agent Manager"
 DATADOG_SERVICE = "DatadogAgent"
 
 AGENT_LOG_FILE = osp.join(_windows_commondata_path(), 'Datadog', 'logs', 'ddagent.log')
-
-AGENT_STATUS = os.path.join(tempfile.gettempdir(), 'Collector.pickle')
 
 HUMAN_SERVICE_STATUS = {
     win32service.SERVICE_RUNNING : 'Service is running',
@@ -292,7 +288,6 @@ class PropertiesWidget(QWidget):
         datadog_conf.content = self.editor.toPlainText().__str__()
         self.disable_button.setEnabled(False)
         self.enable_button.setEnabled(False)
-
         datadog_conf.check_api_key(self.editor)
 
     def set_log_file(self, log_file):
@@ -315,11 +310,11 @@ class PropertiesWidget(QWidget):
 
         except Exception:
             message = message + "=======Unable to Show Status======="
+
         self.editor.set_text(message)
         status.content = self.editor.toPlainText().__str__()
 
     def load_status (self, process):
-        # path = "C:/Windows/Temp/" + process +".pickle"
         path = osp.join(_windows_commondata_path(), 'Datadog', process + '.pickle')
         try:
             f = open(path)
