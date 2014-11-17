@@ -465,7 +465,7 @@ class Menu(QMenu):
 
 class SettingMenu(QMenu):
 
-    def __init__(self, parent=None, setting):
+    def __init__(self, setting, parent=None,):
         QMenu.__init__(self, parent)
         self.options = {}
 
