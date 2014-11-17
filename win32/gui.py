@@ -81,6 +81,12 @@ SYSTEM_TRAY_MENU = [
     (EXIT_MANAGER, lambda: sys.exit(0)),
 ]
 
+AGENT_SETTING_MENU = [
+    ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
+    ("View Logs", lambda: self.properties.set_log_file(self.log_file)),
+    ("Agent Status", lambda: self.properties.display_status(self.status)),
+]
+
 def get_checks():
     checks = {}
     conf_d_directory = get_confd_path(get_os())
@@ -213,7 +219,7 @@ class PropertiesWidget(QWidget):
         layout.addWidget(info_icon)
         layout.addWidget(self.desc_label)
         layout.addStretch()
-        layout.addWidget(self.service_status_label  )
+        layout.addWidget(self.service_status_label)
 
         group_desc.setLayout(layout)
 
@@ -242,6 +248,9 @@ class PropertiesWidget(QWidget):
 
         self.status_button = QPushButton(get_icon("settings.png"),
                                       "Status", self)
+
+        self.setting_button = QPushButton(get_icon("settings.png"),
+                                      "Agent Configurations", self)
 
         self.menu_button = QPushButton(get_icon("settings.png"),
                                       "Manager", self)
@@ -366,14 +375,18 @@ class MainWindow(QSplitter):
         self.connect(listwidget, SIGNAL('currentRowChanged(int)'),
                      lambda row: self.properties.set_item(checks[row]))
 
-        self.connect(self.properties.edit_datadog_conf_button, SIGNAL('clicked()'),
-                     lambda: self.properties.set_datadog_conf(datadog_conf))
+        # self.connect(self.properties.edit_datadog_conf_button, SIGNAL('clicked()'),
+        #              lambda: self.properties.set_datadog_conf(datadog_conf))
 
-        self.connect(self.properties.view_log_button, SIGNAL('clicked()'),
-                     lambda: self.properties.set_log_file(self.log_file))
+        # self.connect(self.properties.view_log_button, SIGNAL('clicked()'),
+        #              lambda: self.properties.set_log_file(self.log_file))
 
-        self.connect(self.properties.status_button, SIGNAL('clicked()'),
-                     lambda: self.properties.display_status(self.status))
+        # self.connect(self.properties.status_button, SIGNAL('clicked()'),
+        #              lambda: self.properties.display_status(self.status))
+
+        self.setting_menu = SettingMenu(self)
+        self.connect(self.properties.setting_button, SIGNAL("clicked()"),
+            lambda: self.setting_menu.popup(self.properties.setting_button.mapToGlobal(QPoint(0,0))))
 
         self.manager_menu = Menu(self)
         self.connect(self.properties.menu_button, SIGNAL("clicked()"),
@@ -416,6 +429,35 @@ class Menu(QMenu):
         self.options = {}
 
         for name, action in SYSTEM_TRAY_MENU:
+            menu_action = self.addAction(name)
+            self.connect(menu_action, SIGNAL('triggered()'), action)
+            self.options[name] = menu_action
+
+        self.connect(self, SIGNAL("aboutToShow()"), lambda: self.update_options())
+
+
+    def update_options(self):
+        status = get_service_status()
+        if is_service_running(status):
+            self.options[START_AGENT].setEnabled(False)
+            self.options[RESTART_AGENT].setEnabled(True)
+            self.options[STOP_AGENT].setEnabled(True)
+        elif is_service_stopped(status):
+            self.options[START_AGENT].setEnabled(True)
+            self.options[RESTART_AGENT].setEnabled(False)
+            self.options[STOP_AGENT].setEnabled(False)
+        elif is_service_pending(status):
+            self.options[START_AGENT].setEnabled(False)
+            self.options[RESTART_AGENT].setEnabled(False)
+            self.options[STOP_AGENT].setEnabled(False)
+
+class SettingMenu(QMenu):
+
+    def __init__(self, parent=None, ):
+        QMenu.__init__(self, parent)
+        self.options = {}
+
+        for name, action in AGENT_SETTING_MENU:
             menu_action = self.addAction(name)
             self.connect(menu_action, SIGNAL('triggered()'), action)
             self.options[name] = menu_action
