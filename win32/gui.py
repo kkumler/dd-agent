@@ -396,7 +396,7 @@ class MainWindow(QSplitter):
             ("Agent Status", lambda: self.properties.display_status(self.status)),
         ]
 
-        self.setting_menu = SettingMenu(self)
+        self.setting_menu = SettingMenu(self, self.settings)
         self.connect(self.properties.setting_button, SIGNAL("clicked()"),
             lambda: self.setting_menu.popup(self.properties.setting_button.mapToGlobal(QPoint(0,0))))
 
@@ -465,11 +465,11 @@ class Menu(QMenu):
 
 class SettingMenu(QMenu):
 
-    def __init__(self, parent=None,):
+    def __init__(self, settings, parent=None,):
         QMenu.__init__(self, parent)
         self.options = {}
 
-        for name, action in self.settings:
+        for name, action in settings:
             menu_action = self.addAction(name)
             self.connect(menu_action, SIGNAL('triggered()'), action)
             self.options[name] = menu_action
