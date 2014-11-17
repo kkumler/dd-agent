@@ -390,13 +390,13 @@ class MainWindow(QSplitter):
         self.connect(self.properties.status_button, SIGNAL('clicked()'),
                      lambda: self.properties.display_status(self.status))
 
-        AGENT_SETTING_MENU = [
+        self.settings = [
             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
             ("View Logs", lambda: self.properties.set_log_file(self.log_file)),
             ("Agent Status", lambda: self.properties.display_status(self.status)),
         ]
 
-        self.setting_menu = SettingMenu(self, AGENT_SETTING_MENU)
+        self.setting_menu = SettingMenu(self)
         self.connect(self.properties.setting_button, SIGNAL("clicked()"),
             lambda: self.setting_menu.popup(self.properties.setting_button.mapToGlobal(QPoint(0,0))))
 
@@ -465,16 +465,14 @@ class Menu(QMenu):
 
 class SettingMenu(QMenu):
 
-    def __init__(self, settings, parent=None,):
+    def __init__(self, parent=None,):
         QMenu.__init__(self, parent)
         self.options = {}
 
-        for name, action in settings:
+        for name, action in self.settings:
             menu_action = self.addAction(name)
             self.connect(menu_action, SIGNAL('triggered()'), action)
             self.options[name] = menu_action
-
-
 
 
 class SystemTray(QSystemTrayIcon):
