@@ -81,10 +81,14 @@ SYSTEM_TRAY_MENU = [
     (EXIT_MANAGER, lambda: sys.exit(0)),
 ]
 
+DATADOG_CONF = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
+LOG_FILE = LogFile()
+STATUS = AgentStatus()
+
 AGENT_SETTING_MENU = [
-    ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
-    ("View Logs", lambda: self.properties.set_log_file(self.log_file)),
-    ("Agent Status", lambda: self.properties.display_status(self.status)),
+    ("Edit Agent Settings", lambda: set_datadog_conf(DATADOG_CONF)),
+    ("View Logs", lambda: set_log_file(LOG_FILE)),
+    ("Agent Status", lambda: display_status(STATUS)),
 ]
 
 def get_checks():
@@ -267,6 +271,8 @@ class PropertiesWidget(QWidget):
         hlayout.addWidget(self.view_log_button)
         hlayout.addStretch()
         hlayout.addWidget(self.status_button)
+        hlayout.addStretch()
+        hlayout.addWidget(self.setting_button)
         hlayout.addStretch()
         hlayout.addWidget(self.menu_button)
 
@@ -462,23 +468,7 @@ class SettingMenu(QMenu):
             self.connect(menu_action, SIGNAL('triggered()'), action)
             self.options[name] = menu_action
 
-        self.connect(self, SIGNAL("aboutToShow()"), lambda: self.update_options())
 
-
-    def update_options(self):
-        status = get_service_status()
-        if is_service_running(status):
-            self.options[START_AGENT].setEnabled(False)
-            self.options[RESTART_AGENT].setEnabled(True)
-            self.options[STOP_AGENT].setEnabled(True)
-        elif is_service_stopped(status):
-            self.options[START_AGENT].setEnabled(True)
-            self.options[RESTART_AGENT].setEnabled(False)
-            self.options[STOP_AGENT].setEnabled(False)
-        elif is_service_pending(status):
-            self.options[START_AGENT].setEnabled(False)
-            self.options[RESTART_AGENT].setEnabled(False)
-            self.options[STOP_AGENT].setEnabled(False)
 
 
 class SystemTray(QSystemTrayIcon):
