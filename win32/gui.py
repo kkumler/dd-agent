@@ -241,8 +241,8 @@ class PropertiesWidget(QWidget):
         self.save_button = QPushButton(get_icon("filesave.png"),
                                       "Save", self)
 
-        self.edit_datadog_conf_button = QPushButton(get_icon("edit.png"),
-                                      "Edit agent settings", self)
+        # self.edit_datadog_conf_button = QPushButton(get_icon("edit.png"),
+        #                               "Edit agent settings", self)
 
         self.disable_button = QPushButton(get_icon("delete.png"),
                                       "Disable", self)
