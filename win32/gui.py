@@ -335,6 +335,16 @@ class PropertiesWidget(QWidget):
         message = a.render()
         return message
 
+DATADOG_CONF = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
+LOG_FILE = LogFile()
+STATUS = AgentStatus()
+
+AGENT_SETTING_MENU = [
+    ("Edit Agent Settings", lambda: PropertiesWidget.set_datadog_conf(DATADOG_CONF)),
+    ("View Logs", lambda: PropertiesWidget.set_log_file(LOG_FILE)),
+    ("Agent Status", lambda: PropertiesWidget.display_status(STATUS)),
+]
+
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
 
@@ -372,14 +382,14 @@ class MainWindow(QSplitter):
         self.connect(listwidget, SIGNAL('currentRowChanged(int)'),
                      lambda row: self.properties.set_item(checks[row]))
 
-        # self.connect(self.properties.edit_datadog_conf_button, SIGNAL('clicked()'),
-        #              lambda: self.properties.set_datadog_conf(datadog_conf))
+        self.connect(self.properties.edit_datadog_conf_button, SIGNAL('clicked()'),
+                     lambda: self.properties.set_datadog_conf(datadog_conf))
 
-        # self.connect(self.properties.view_log_button, SIGNAL('clicked()'),
-        #              lambda: self.properties.set_log_file(self.log_file))
+        self.connect(self.properties.view_log_button, SIGNAL('clicked()'),
+                     lambda: self.properties.set_log_file(self.log_file))
 
-        # self.connect(self.properties.status_button, SIGNAL('clicked()'),
-        #              lambda: self.properties.display_status(self.status))
+        self.connect(self.properties.status_button, SIGNAL('clicked()'),
+                     lambda: self.properties.display_status(self.status))
 
         self.setting_menu = SettingMenu(self)
         self.connect(self.properties.setting_button, SIGNAL("clicked()"),
@@ -554,18 +564,6 @@ def warning_popup(message, parent=None):
 
 def info_popup(message, parent=None):
     QMessageBox.information(parent, 'Message', message, QMessageBox.Ok)
-
-
-
-DATADOG_CONF = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
-LOG_FILE = LogFile()
-STATUS = AgentStatus()
-
-AGENT_SETTING_MENU = [
-    ("Edit Agent Settings", lambda: set_datadog_conf(DATADOG_CONF)),
-    ("View Logs", lambda: set_log_file(LOG_FILE)),
-    ("Agent Status", lambda: display_status(STATUS)),
-]
 
 
 if __name__ == '__main__':
