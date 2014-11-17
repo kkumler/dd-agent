@@ -81,15 +81,6 @@ SYSTEM_TRAY_MENU = [
     (EXIT_MANAGER, lambda: sys.exit(0)),
 ]
 
-DATADOG_CONF = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
-LOG_FILE = LogFile()
-STATUS = AgentStatus()
-
-AGENT_SETTING_MENU = [
-    ("Edit Agent Settings", lambda: set_datadog_conf(DATADOG_CONF)),
-    ("View Logs", lambda: set_log_file(LOG_FILE)),
-    ("Agent Status", lambda: display_status(STATUS)),
-]
 
 def get_checks():
     checks = {}
@@ -563,6 +554,18 @@ def warning_popup(message, parent=None):
 
 def info_popup(message, parent=None):
     QMessageBox.information(parent, 'Message', message, QMessageBox.Ok)
+
+
+
+DATADOG_CONF = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
+LOG_FILE = LogFile()
+STATUS = AgentStatus()
+
+AGENT_SETTING_MENU = [
+    ("Edit Agent Settings", lambda: set_datadog_conf(DATADOG_CONF)),
+    ("View Logs", lambda: set_log_file(LOG_FILE)),
+    ("Agent Status", lambda: display_status(STATUS)),
+]
 
 
 if __name__ == '__main__':
