@@ -81,6 +81,15 @@ SYSTEM_TRAY_MENU = [
     (EXIT_MANAGER, lambda: sys.exit(0)),
 ]
 
+# DATADOG_CONF = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
+# LOG_FILE = LogFile()
+# STATUS = AgentStatus()
+
+# AGENT_SETTING_MENU = [
+#             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(DATADOG_CONF)),
+#             ("View Logs", lambda: self.properties.set_log_file(LOG_FILE)),
+#             ("Agent Status", lambda: self.properties.display_status(STATUS)),
+# ]
 
 def get_checks():
     checks = {}
@@ -335,16 +344,6 @@ class PropertiesWidget(QWidget):
         message = a.render()
         return message
 
-DATADOG_CONF = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
-LOG_FILE = LogFile()
-STATUS = AgentStatus()
-
-AGENT_SETTING_MENU = [
-    ("Edit Agent Settings", lambda: PropertiesWidget.set_datadog_conf(DATADOG_CONF)),
-    ("View Logs", lambda: PropertiesWidget.set_log_file(LOG_FILE)),
-    ("Agent Status", lambda: PropertiesWidget.display_status(STATUS)),
-]
-
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
 
@@ -391,7 +390,13 @@ class MainWindow(QSplitter):
         self.connect(self.properties.status_button, SIGNAL('clicked()'),
                      lambda: self.properties.display_status(self.status))
 
-        self.setting_menu = SettingMenu(self)
+        AGENT_SETTING_MENU = [
+            ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
+            ("View Logs", lambda: self.properties.set_log_file(self.log_file)),
+            ("Agent Status", lambda: self.properties.display_status(self.status)),
+        ]
+
+        self.setting_menu = SettingMenu(self, AGENT_SETTING_MENU)
         self.connect(self.properties.setting_button, SIGNAL("clicked()"),
             lambda: self.setting_menu.popup(self.properties.setting_button.mapToGlobal(QPoint(0,0))))
 
@@ -458,13 +463,13 @@ class Menu(QMenu):
             self.options[RESTART_AGENT].setEnabled(False)
             self.options[STOP_AGENT].setEnabled(False)
 
-class SettingMenu(QMenu):
+class SettingMenu(QMenu, Settings):
 
     def __init__(self, parent=None, ):
         QMenu.__init__(self, parent)
         self.options = {}
 
-        for name, action in AGENT_SETTING_MENU:
+        for name, action in Settings:
             menu_action = self.addAction(name)
             self.connect(menu_action, SIGNAL('triggered()'), action)
             self.options[name] = menu_action
