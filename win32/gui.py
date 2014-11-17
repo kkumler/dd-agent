@@ -465,11 +465,11 @@ class Menu(QMenu):
 
 class SettingMenu(QMenu):
 
-    def __init__(self, setting, parent=None,):
+    def __init__(self, settings, parent=None,):
         QMenu.__init__(self, parent)
         self.options = {}
 
-        for name, action in Settings:
+        for name, action in settings:
             menu_action = self.addAction(name)
             self.connect(menu_action, SIGNAL('triggered()'), action)
             self.options[name] = menu_action
