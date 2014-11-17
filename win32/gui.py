@@ -324,7 +324,7 @@ class PropertiesWidget(QWidget):
             message = message + self.load_status("ForwarderStatus")
 
         except Exception:
-            message = message + "=======Unable to Show Status======="
+            message = message + "========Unable to Show Status========"
 
         self.editor.set_text(message)
         status.content = self.editor.toPlainText().__str__()
@@ -463,9 +463,9 @@ class Menu(QMenu):
             self.options[RESTART_AGENT].setEnabled(False)
             self.options[STOP_AGENT].setEnabled(False)
 
-class SettingMenu(QMenu, Settings):
+class SettingMenu(QMenu):
 
-    def __init__(self, parent=None, ):
+    def __init__(self, parent=None, setting):
         QMenu.__init__(self, parent)
         self.options = {}
 
