@@ -266,12 +266,12 @@ class PropertiesWidget(QWidget):
         hlayout.addStretch()
         hlayout.addWidget(self.disable_button)
         hlayout.addStretch()
-        hlayout.addWidget(self.edit_datadog_conf_button)
-        hlayout.addStretch()
-        hlayout.addWidget(self.view_log_button)
-        hlayout.addStretch()
-        hlayout.addWidget(self.status_button)
-        hlayout.addStretch()
+        # hlayout.addWidget(self.edit_datadog_conf_button)
+        # hlayout.addStretch()
+        # hlayout.addWidget(self.view_log_button)
+        # hlayout.addStretch()
+        # hlayout.addWidget(self.status_button)
+        # hlayout.addStretch()
         hlayout.addWidget(self.setting_button)
         hlayout.addStretch()
         hlayout.addWidget(self.menu_button)
@@ -381,14 +381,14 @@ class MainWindow(QSplitter):
         self.connect(listwidget, SIGNAL('currentRowChanged(int)'),
                      lambda row: self.properties.set_item(checks[row]))
 
-        self.connect(self.properties.edit_datadog_conf_button, SIGNAL('clicked()'),
-                     lambda: self.properties.set_datadog_conf(datadog_conf))
+        # self.connect(self.properties.edit_datadog_conf_button, SIGNAL('clicked()'),
+        #              lambda: self.properties.set_datadog_conf(datadog_conf))
 
-        self.connect(self.properties.view_log_button, SIGNAL('clicked()'),
-                     lambda: self.properties.set_log_file(self.log_file))
+        # self.connect(self.properties.view_log_button, SIGNAL('clicked()'),
+        #              lambda: self.properties.set_log_file(self.log_file))
 
-        self.connect(self.properties.status_button, SIGNAL('clicked()'),
-                     lambda: self.properties.display_status(self.status))
+        # self.connect(self.properties.status_button, SIGNAL('clicked()'),
+        #              lambda: self.properties.display_status(self.status))
 
         self.settings = [
             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
