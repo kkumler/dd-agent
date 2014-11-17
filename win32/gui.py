@@ -247,8 +247,8 @@ class PropertiesWidget(QWidget):
         self.disable_button = QPushButton(get_icon("delete.png"),
                                       "Disable", self)
 
-        self.view_log_button = QPushButton(get_icon("txt.png"),
-                                      "View log", self)
+        # self.view_log_button = QPushButton(get_icon("txt.png"),
+        #                               "View log", self)
 
         # self.status_button = QPushButton(get_icon("settings.png"),
         #                               "Status", self)
