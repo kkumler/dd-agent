@@ -421,7 +421,7 @@ class MainWindow(QSplitter):
         self.setSizes([150, 1])
         self.setStretchFactor(1, 1)
         self.resize(QSize(950, 600))
-        self.properties.set_datadog_conf(datadog_confs)
+        self.properties.set_datadog_conf(datadog_conf)
 
         self.do_refresh()
 
