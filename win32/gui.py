@@ -378,7 +378,7 @@ class MainWindow(QSplitter):
         buttonGroup = QHBoxLayout(self)
         buttonGroup.addWidget(self.setting_button)
         buttonGroup.addWidget(self.menu_button)
-        buttonBox.setLayout(layout)
+        buttonBox.setLayout(buttonGroup)
 
         self.addWidget(buttonBox)
         self.addWidget(listwidget)
