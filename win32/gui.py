@@ -351,16 +351,7 @@ class MainWindow(QSplitter):
         self.setWindowTitle(MAIN_WINDOW_TITLE)
         self.setWindowIcon(get_icon("agent.svg"))
 
-        self.setting_button = QPushButton(get_icon("settings.png"),
-                                      "Agent Configurations", self)
-        self.menu_button = QPushButton(get_icon("settings.png"),
-                                      "Manager", self)
 
-        self.buttonGroup = QHBoxLayout()
-
-        self.buttonGroup.addWidget(self.setting_button)
-        self.buttonGroup.addStretch()
-        self.buttonGroup.addWidget(self.menu_button)
 
         self.sysTray = SystemTray(self)
 
@@ -377,6 +368,18 @@ class MainWindow(QSplitter):
 
         self.properties = PropertiesWidget(self)
 
+
+        self.setting_button = QPushButton(get_icon("settings.png"),
+                                      "Agent Configurations", self)
+        self.menu_button = QPushButton(get_icon("settings.png"),
+                                      "Manager", self)
+
+        buttonGroup = QHBoxLayout()
+        buttonGroup.addWidget(self.setting_button)
+        buttonGroup.addWidget(self.menu_button)
+
+
+        self.addwidget(buttonGroup)
         self.addWidget(listwidget)
         self.addWidget(self.properties)
 
