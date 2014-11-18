@@ -379,7 +379,7 @@ class MainWindow(QSplitter):
         buttonGroup.addWidget(self.menu_button)
 
 
-        self.addwidget(buttonGroup)
+        self.addWidget(buttonGroup)
         self.addWidget(listwidget)
         self.addWidget(self.properties)
 
