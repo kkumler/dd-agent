@@ -265,16 +265,16 @@ class PropertiesWidget(QWidget):
         hlayout.addWidget(self.enable_button)
         hlayout.addStretch()
         hlayout.addWidget(self.disable_button)
-        hlayout.addStretch()
+        # hlayout.addStretch()
         # hlayout.addWidget(self.edit_datadog_conf_button)
         # hlayout.addStretch()
         # hlayout.addWidget(self.view_log_button)
         # hlayout.addStretch()
         # hlayout.addWidget(self.status_button)
         # hlayout.addStretch()
-        hlayout.addWidget(self.setting_button)
-        hlayout.addStretch()
-        hlayout.addWidget(self.menu_button)
+        # hlayout.addWidget(self.setting_button)
+        # hlayout.addStretch()
+        # hlayout.addWidget(self.menu_button)
 
         vlayout = QVBoxLayout()
         vlayout.addWidget(group_desc)
@@ -351,6 +351,17 @@ class MainWindow(QSplitter):
         self.setWindowTitle(MAIN_WINDOW_TITLE)
         self.setWindowIcon(get_icon("agent.svg"))
 
+        self.setting_button = QPushButton(get_icon("settings.png"),
+                                      "Agent Configurations", self)
+        self.menu_button = QPushButton(get_icon("settings.png"),
+                                      "Manager", self)
+
+        self.buttonGroup = QHBoxLayout()
+
+        self.buttonGroup.addWidget(self.setting_button)
+        self.buttonGroup.addStretch()
+        self.buttonGroup.addWidget(self.menu_button)
+
         self.sysTray = SystemTray(self)
 
         self.connect(self.sysTray, SIGNAL("activated(QSystemTrayIcon::ActivationReason)"), self.__icon_activated)
@@ -410,7 +421,7 @@ class MainWindow(QSplitter):
         self.setSizes([150, 1])
         self.setStretchFactor(1, 1)
         self.resize(QSize(950, 600))
-        self.properties.set_datadog_conf(datadog_conf)
+        self.properties.set_datadog_conf(datadog_confs)
 
         self.do_refresh()
 
