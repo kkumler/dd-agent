@@ -372,16 +372,17 @@ class MainWindow(QSplitter):
         self.menu_button = QPushButton(get_icon("settings.png"),
                                       "Manager", self)
 
-        buttonBox = QGroupBox("Description", self)
-        buttonGroup = QHBoxLayout(self)
-        buttonGroup.addWidget(self.setting_button)
-        buttonGroup.addWidget(self.menu_button)
-        buttonBox.setLayout(buttonGroup)
+        # buttonBox = QGroupBox("Description", self)
+        # buttonGroup = QHBoxLayout(self)
+        # buttonGroup.addWidget(self.setting_button)
+        # buttonGroup.addWidget(self.menu_button)
+        # buttonBox.setLayout(buttonGroup)
 
 
         holdingBox = QGroupBox("Description", self)
         Box = QHBoxLayout(self)
-        Box.addWidget(buttonGroup)
+        Box.addWidget(self.setting_button)
+        Box.addWidget(self.menu_button)
         Box.addWidget(listwidget)
         holdingBox.setLayout(Box)
 
