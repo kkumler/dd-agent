@@ -253,11 +253,11 @@ class PropertiesWidget(QWidget):
         # self.status_button = QPushButton(get_icon("settings.png"),
         #                               "Status", self)
 
-        self.setting_button = QPushButton(get_icon("settings.png"),
-                                      "Agent Configurations", self)
+        # self.setting_button = QPushButton(get_icon("settings.png"),
+        #                               "Agent Configurations", self)
 
-        self.menu_button = QPushButton(get_icon("settings.png"),
-                                      "Manager", self)
+        # self.menu_button = QPushButton(get_icon("settings.png"),
+        #                               "Manager", self)
 
         hlayout = QHBoxLayout()
         hlayout.addWidget(self.save_button)
@@ -272,9 +272,9 @@ class PropertiesWidget(QWidget):
         # hlayout.addStretch()
         # hlayout.addWidget(self.status_button)
         # hlayout.addStretch()
-        hlayout.addWidget(self.setting_button)
-        hlayout.addStretch()
-        hlayout.addWidget(self.menu_button)
+        # hlayout.addWidget(self.setting_button)
+        # hlayout.addStretch()
+        # hlayout.addWidget(self.menu_button)
 
         vlayout = QVBoxLayout()
         vlayout.addWidget(group_desc)
@@ -372,6 +372,21 @@ class MainWindow(QSplitter):
         self.menu_button = QPushButton(get_icon("settings.png"),
                                       "Manager", self)
 
+        self.settings = [
+            ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
+            ("View Logs", lambda: self.properties.set_log_file(self.log_file)),
+            ("Agent Status", lambda: self.properties.display_status(self.status)),
+        ]
+
+        self.setting_menu = SettingMenu(self.settings)
+        self.connect(self.properties.setting_button, SIGNAL("clicked()"),
+            lambda: self.setting_menu.popup(self.properties.setting_button.mapToGlobal(QPoint(0,0))))
+
+        self.manager_menu = Menu(self)
+        self.connect(self.properties.menu_button, SIGNAL("clicked()"),
+            lambda: self.manager_menu.popup(self.properties.menu_button.mapToGlobal(QPoint(0,0))))
+
+
         # buttonBox = QGroupBox("Description", self)
         # buttonGroup = QHBoxLayout(self)
         # buttonGroup.addWidget(self.setting_button)
@@ -412,19 +427,6 @@ class MainWindow(QSplitter):
         # self.connect(self.properties.status_button, SIGNAL('clicked()'),
         #              lambda: self.properties.display_status(self.status))
 
-        self.settings = [
-            ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
-            ("View Logs", lambda: self.properties.set_log_file(self.log_file)),
-            ("Agent Status", lambda: self.properties.display_status(self.status)),
-        ]
-
-        self.setting_menu = SettingMenu(self.settings)
-        self.connect(self.properties.setting_button, SIGNAL("clicked()"),
-            lambda: self.setting_menu.popup(self.properties.setting_button.mapToGlobal(QPoint(0,0))))
-
-        self.manager_menu = Menu(self)
-        self.connect(self.properties.menu_button, SIGNAL("clicked()"),
-            lambda: self.manager_menu.popup(self.properties.menu_button.mapToGlobal(QPoint(0,0))))
 
 
         listwidget.setCurrentRow(0)
