@@ -380,7 +380,7 @@ class MainWindow(QSplitter):
 
 
         holdingBox = QGroupBox("Description", self)
-        Box = QHBoxLayout(self)
+        Box = QVBoxLayout(self)
         Box.addWidget(self.setting_button)
         Box.addWidget(self.menu_button)
         Box.addWidget(listwidget)
