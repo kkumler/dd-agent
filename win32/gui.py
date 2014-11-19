@@ -386,18 +386,16 @@ class MainWindow(QSplitter):
         self.connect(self.menu_button, SIGNAL("clicked()"),
             lambda: self.manager_menu.popup(self.menu_button.mapToGlobal(QPoint(0,0))))
 
-
-        listBox = QGroupBox("Check Configs", self)
-        listGroup = QHBoxLayout(self)
-        listGroup.addWidget(listwidget)
-        listBox.setLayout(listGroup)
-
+        # listBox = QGroupBox("Check Configs", self)
+        # listGroup = QHBoxLayout(self)
+        # listGroup.addWidget(listwidget)
+        # listBox.setLayout(listGroup)
 
         holdingBox = QGroupBox("", self)
         Box = QVBoxLayout(self)
         Box.addWidget(self.setting_button)
         Box.addWidget(self.menu_button)
-        Box.addWidget(listBox)
+        Box.addWidget(listwidget)
         holdingBox.setLayout(Box)
 
 
