@@ -394,7 +394,7 @@ class MainWindow(QSplitter):
         # buttonBox.setLayout(buttonGroup)
 
 
-        holdingBox = QGroupBox(None, self)
+        holdingBox = QGroupBox("", self)
         Box = QVBoxLayout(self)
         Box.addWidget(self.setting_button)
         Box.addWidget(self.menu_button)
