@@ -261,9 +261,9 @@ class PropertiesWidget(QWidget):
 
         hlayout = QHBoxLayout()
         hlayout.addWidget(self.save_button)
-        hlayout.addStretch()
+        # hlayout.addStretch()
         hlayout.addWidget(self.enable_button)
-        hlayout.addStretch()
+        # hlayout.addStretch()
         hlayout.addWidget(self.disable_button)
         # hlayout.addStretch()
         # hlayout.addWidget(self.edit_datadog_conf_button)
@@ -370,7 +370,7 @@ class MainWindow(QSplitter):
         self.setting_button = QPushButton(get_icon("settings.png"),
                                       "Agent Configurations", self)
         self.menu_button = QPushButton(get_icon("settings.png"),
-                                      "Manager", self)
+                                      "Agent Actions", self)
 
         self.settings = [
             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
@@ -394,7 +394,7 @@ class MainWindow(QSplitter):
         # buttonBox.setLayout(buttonGroup)
 
 
-        holdingBox = QGroupBox("Description", self)
+        holdingBox = QGroupBox(None, self)
         Box = QVBoxLayout(self)
         Box.addWidget(self.setting_button)
         Box.addWidget(self.menu_button)
@@ -403,7 +403,6 @@ class MainWindow(QSplitter):
 
 
         self.addWidget(holdingBox)
-        # self.addWidget(listwidget)
         self.addWidget(self.properties)
 
         self.connect(self.properties.enable_button, SIGNAL("clicked()"),
@@ -426,8 +425,6 @@ class MainWindow(QSplitter):
 
         # self.connect(self.properties.status_button, SIGNAL('clicked()'),
         #              lambda: self.properties.display_status(self.status))
-
-
 
         listwidget.setCurrentRow(0)
 
