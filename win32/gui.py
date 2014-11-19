@@ -380,11 +380,11 @@ class MainWindow(QSplitter):
 
         self.setting_menu = SettingMenu(self.settings)
         self.connect(self.properties.setting_button, SIGNAL("clicked()"),
-            lambda: self.setting_menu.popup(self.properties.setting_button.mapToGlobal(QPoint(0,0))))
+            lambda: self.setting_menu.popup(self.setting_button.mapToGlobal(QPoint(0,0))))
 
         self.manager_menu = Menu(self)
         self.connect(self.properties.menu_button, SIGNAL("clicked()"),
-            lambda: self.manager_menu.popup(self.properties.menu_button.mapToGlobal(QPoint(0,0))))
+            lambda: self.manager_menu.popup(self.menu_button.mapToGlobal(QPoint(0,0))))
 
 
         # buttonBox = QGroupBox("Description", self)
