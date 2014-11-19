@@ -272,9 +272,9 @@ class PropertiesWidget(QWidget):
         # hlayout.addStretch()
         # hlayout.addWidget(self.status_button)
         # hlayout.addStretch()
-        # hlayout.addWidget(self.setting_button)
-        # hlayout.addStretch()
-        # hlayout.addWidget(self.menu_button)
+        hlayout.addWidget(self.setting_button)
+        hlayout.addStretch()
+        hlayout.addWidget(self.menu_button)
 
         vlayout = QVBoxLayout()
         vlayout.addWidget(group_desc)
@@ -351,8 +351,6 @@ class MainWindow(QSplitter):
         self.setWindowTitle(MAIN_WINDOW_TITLE)
         self.setWindowIcon(get_icon("agent.svg"))
 
-
-
         self.sysTray = SystemTray(self)
 
         self.connect(self.sysTray, SIGNAL("activated(QSystemTrayIcon::ActivationReason)"), self.__icon_activated)
@@ -374,14 +372,22 @@ class MainWindow(QSplitter):
         self.menu_button = QPushButton(get_icon("settings.png"),
                                       "Manager", self)
 
-        # buttonBox = QGroupBox("Description", self)
+        buttonBox = QGroupBox("Description", self)
         buttonGroup = QHBoxLayout(self)
         buttonGroup.addWidget(self.setting_button)
         buttonGroup.addWidget(self.menu_button)
-        listwidget.setLayout(buttonGroup)
+        buttonBox.setLayout(buttonGroup)
 
-        # self.addWidget(buttonBox)
-        self.addWidget(listwidget)
+
+        holdingBox = QGroupBox("Description", self)
+        Box = QHBoxLayout(self)
+        Box.addWidget(buttonGroup)
+        Box.addWidget(listwidget)
+        holdingBox.setLayout(Box)
+
+
+        self.addWidget(holdingBox)
+        # self.addWidget(listwidget)
         self.addWidget(self.properties)
 
         self.connect(self.properties.enable_button, SIGNAL("clicked()"),
