@@ -310,7 +310,7 @@ class PropertiesWidget(QWidget):
 class testHTML(QTextEdit):
     def __init__(self, parent=None):
         QTextEdit.__init__(self, parent)
-        self.insertHtml("<b>This text is bold </b>")
+        self.insertHtml('''<b style="color:blue">This text is bold </b>''')
 
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
