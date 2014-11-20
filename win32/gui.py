@@ -81,16 +81,6 @@ SYSTEM_TRAY_MENU = [
     (EXIT_MANAGER, lambda: sys.exit(0)),
 ]
 
-# DATADOG_CONF = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
-# LOG_FILE = LogFile()
-# STATUS = AgentStatus()
-
-# AGENT_SETTING_MENU = [
-#             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(DATADOG_CONF)),
-#             ("View Logs", lambda: self.properties.set_log_file(LOG_FILE)),
-#             ("Agent Status", lambda: self.properties.display_status(STATUS)),
-# ]
-
 def get_checks():
     checks = {}
     conf_d_directory = get_confd_path(get_os())
@@ -241,40 +231,13 @@ class PropertiesWidget(QWidget):
         self.save_button = QPushButton(get_icon("filesave.png"),
                                       "Save", self)
 
-        # self.edit_datadog_conf_button = QPushButton(get_icon("edit.png"),
-        #                               "Edit agent settings", self)
-
         self.disable_button = QPushButton(get_icon("delete.png"),
                                       "Disable", self)
 
-        # self.view_log_button = QPushButton(get_icon("txt.png"),
-        #                               "View log", self)
-
-        # self.status_button = QPushButton(get_icon("settings.png"),
-        #                               "Status", self)
-
-        # self.setting_button = QPushButton(get_icon("settings.png"),
-        #                               "Agent Configurations", self)
-
-        # self.menu_button = QPushButton(get_icon("settings.png"),
-        #                               "Manager", self)
-
         hlayout = QHBoxLayout()
         hlayout.addWidget(self.save_button)
-        # hlayout.addStretch()
         hlayout.addWidget(self.enable_button)
-        # hlayout.addStretch()
         hlayout.addWidget(self.disable_button)
-        # hlayout.addStretch()
-        # hlayout.addWidget(self.edit_datadog_conf_button)
-        # hlayout.addStretch()
-        # hlayout.addWidget(self.view_log_button)
-        # hlayout.addStretch()
-        # hlayout.addWidget(self.status_button)
-        # hlayout.addStretch()
-        # hlayout.addWidget(self.setting_button)
-        # hlayout.addStretch()
-        # hlayout.addWidget(self.menu_button)
 
         vlayout = QVBoxLayout()
         vlayout.addWidget(group_desc)
@@ -386,11 +349,6 @@ class MainWindow(QSplitter):
         self.connect(self.menu_button, SIGNAL("clicked()"),
             lambda: self.manager_menu.popup(self.menu_button.mapToGlobal(QPoint(0,0))))
 
-        # listBox = QGroupBox("Check Configs", self)
-        # listGroup = QHBoxLayout(self)
-        # listGroup.addWidget(listwidget)
-        # listBox.setLayout(listGroup)
-
         holdingBox = QGroupBox("", self)
         Box = QVBoxLayout(self)
         Box.addWidget(self.setting_button)
@@ -413,15 +371,6 @@ class MainWindow(QSplitter):
 
         self.connect(listwidget, SIGNAL('currentRowChanged(int)'),
                      lambda row: self.properties.set_item(checks[row]))
-
-        # self.connect(self.properties.edit_datadog_conf_button, SIGNAL('clicked()'),
-        #              lambda: self.properties.set_datadog_conf(datadog_conf))
-
-        # self.connect(self.properties.view_log_button, SIGNAL('clicked()'),
-        #              lambda: self.properties.set_log_file(self.log_file))
-
-        # self.connect(self.properties.status_button, SIGNAL('clicked()'),
-        #              lambda: self.properties.display_status(self.status))
 
         listwidget.setCurrentRow(0)
 

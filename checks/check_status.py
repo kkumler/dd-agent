@@ -212,12 +212,10 @@ class AgentStatus(object):
         try:
             f = open(cls._get_pickle_path())
             try:
-                log.info("load latest pickle")
                 return pickle.load(f)
             finally:
                 f.close()
         except IOError:
-            log.info("Couldn't load latest status")
             return None
 
     @classmethod
@@ -247,7 +245,7 @@ class AgentStatus(object):
 
     @classmethod
     def _get_pickle_path(cls):
-        if platform.system() is 'Windows':
+        if sys.platform is 'win32':
             path = osp.join(_windows_commondata_path(), 'Datadog', cls.__name__ + '.pickle')
         else:
             path = os.path.join(tempfile.gettempdir(), cls.__name__ + '.pickle')
