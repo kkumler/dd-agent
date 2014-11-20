@@ -21,7 +21,7 @@ import win32service
 from guidata.qt.QtGui import (QWidget, QVBoxLayout, QSplitter, QFont,
                               QListWidget, QPushButton, QLabel, QGroupBox,
                               QHBoxLayout, QMessageBox, QInputDialog,
-                              QSystemTrayIcon, QIcon, QMenu)
+                              QSystemTrayIcon, QIcon, QMenu, QTextEdit)
 from guidata.qt.QtCore import SIGNAL, Qt, QSize, QPoint, QTimer
 
 from guidata.configtools import get_icon, get_family, MONOSPACE
@@ -310,7 +310,7 @@ class PropertiesWidget(QWidget):
 class testHTML(QTextEdit):
     def __init__(self, parent=None):
         QTextEdit.__init__(self, parent)
-        self.setText("<b>This text is bold </b>")
+        self.insertHtml("<b>This text is bold </b>")
 
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
