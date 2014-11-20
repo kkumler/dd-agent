@@ -307,6 +307,11 @@ class PropertiesWidget(QWidget):
         message = a.render()
         return message
 
+class testHTML(QTextEdit):
+    def __init__(self, parent=None):
+        QTextEdit.__init__(self, parent)
+        self.setText("<b>This text is bold </b>")
+
 class MainWindow(QSplitter):
     def __init__(self, parent=None):
 
@@ -356,8 +361,9 @@ class MainWindow(QSplitter):
         Box.addWidget(listwidget)
         holdingBox.setLayout(Box)
 
+        htmltest = testHTML()
 
-        self.addWidget(holdingBox)
+        self.addWidget(htmltest)
         self.addWidget(self.properties)
 
         self.connect(self.properties.enable_button, SIGNAL("clicked()"),
