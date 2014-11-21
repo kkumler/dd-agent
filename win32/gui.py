@@ -242,6 +242,10 @@ class PropertiesWidget(QWidget):
         vlayout = QVBoxLayout()
         vlayout.addWidget(group_desc)
         vlayout.addWidget(group_code)
+
+        vlayout.removeWidget(group_code)
+
+        vlayout.addWidget()
         vlayout.addLayout(hlayout)
         self.setLayout(vlayout)
 
@@ -520,10 +524,10 @@ class MainWindow(QSplitter):
 
         htmltest = testHTML()
 
-        self.addWidget(htmltest)
-        self.addWidget(self.properties)
-        self.removeWidget(htmltest)
         self.addWidget(holdingBox)
+        self.addWidget(self.properties)
+        # self.removeWidget(htmltest)
+        # self.addWidget(holdingBox)
 
         self.connect(self.properties.enable_button, SIGNAL("clicked()"),
                      lambda: enable_check(self.properties))
