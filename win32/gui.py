@@ -217,9 +217,9 @@ class PropertiesWidget(QWidget):
 
         group_desc.setLayout(layout)
 
-        self.editor = CodeEditor(self)
-        self.editor.setup_editor(linenumbers=True, font=font)
-        self.editor.setReadOnly(False)
+        # self.editor = CodeEditor(self)
+        # self.editor.setup_editor(linenumbers=True, font=font)
+        # self.editor.setReadOnly(False)
         # group_code = QGroupBox("Source code", self)
         # layout = QVBoxLayout()
         # layout.addWidget(self.editor)
