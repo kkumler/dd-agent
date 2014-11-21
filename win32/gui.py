@@ -522,6 +522,8 @@ class MainWindow(QSplitter):
 
         self.addWidget(htmltest)
         self.addWidget(self.properties)
+        self.removeWidget(htmltest)
+        self.addWidget(holdingBox)
 
         self.connect(self.properties.enable_button, SIGNAL("clicked()"),
                      lambda: enable_check(self.properties))
