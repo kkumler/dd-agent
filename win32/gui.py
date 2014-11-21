@@ -242,10 +242,11 @@ class PropertiesWidget(QWidget):
         vlayout = QVBoxLayout()
         vlayout.addWidget(group_desc)
         vlayout.addWidget(group_code)
-
         vlayout.removeWidget(group_code)
 
-        vlayout.addWidget()
+        htmltest = testHTML()
+        vlayout.addWidget(htmltest)
+
         vlayout.addLayout(hlayout)
         self.setLayout(vlayout)
 
