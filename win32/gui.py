@@ -183,9 +183,9 @@ class AgentCheck(EditorFile):
         check_yaml_syntax(content)
         EditorFile.save(self, content)
 
-class AgentStatus(EditorFile):
-    def __init__(self):
-        EditorFile.__init__(self, None, "Agent Status Page")
+# class AgentStatus(EditorFile):
+#     def __init__(self):
+#         EditorFile.__init__(self, None, "Agent Status Page")
 
 class PropertiesWidget(QWidget):
     def __init__(self, parent):
@@ -295,20 +295,20 @@ class PropertiesWidget(QWidget):
         self.enable_button.setEnabled(False)
         self.editor.go_to_line(len(log_file.content.splitlines()))
 
-    def display_status(self, status):
-        self.current_file = status
-        self.desc_label.setText(status.get_description())
-        message = ""
-        try:
-            message = message + self.load_status("CollectorStatus")
-            message = message + self.load_status("DogstatsdStatus")
-            message = message + self.load_status("ForwarderStatus")
+    def display_status(self):
+        # self.current_file = status
+        # self.desc_label.setText(status.get_description())
+        # message = ""
+        # try:
+        #     message = message + self.load_status("CollectorStatus")
+        #     message = message + self.load_status("DogstatsdStatus")
+        #     message = message + self.load_status("ForwarderStatus")
 
-        except Exception:
-            message = message + "========Unable to Show Status========"
+        # except Exception:
+        #     message = message + "========Unable to Show Status========"
 
-        self.editor.set_text(message)
-        status.content = self.editor.toPlainText().__str__()
+        # self.editor.set_text(message)
+        # status.content = self.editor.toPlainText().__str__()
 
     def load_status (self, process):
         path = osp.join(_windows_commondata_path(), 'Datadog', process + '.pickle')
@@ -509,8 +509,6 @@ class MainWindow(QSplitter):
         datadog_conf = DatadogConf(get_config_path(), description="Agent settings file: datadog.conf")
         self.log_file = LogFile()
 
-        self.status = AgentStatus()
-
         listwidget = QListWidget(self)
         listwidget.addItems([osp.basename(check.module_name).replace("_", " ").title() for check in checks])
 
@@ -524,8 +522,8 @@ class MainWindow(QSplitter):
 
         self.settings = [
             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
-            ("View Logs", lambda: self.properties.set_log_file(self.log_file), self.properties.hide_widget(self.properties.group_code, self.properties.htmltest))
-            ("Agent Status", lambda: self.properties.display_status(self.status)),
+            ("View Logs", lambda: self.properties.set_log_file(self.log_file))
+            ("Agent Status", lambda: self.properties.display_status()),
         ]
 
         self.setting_menu = SettingMenu(self.settings)
