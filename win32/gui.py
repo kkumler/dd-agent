@@ -237,7 +237,9 @@ class PropertiesWidget(QWidget):
         self.testbutton = QPushButton('test')
 
         self.connect(self.testbutton, SIGNAL("clicked()"),
-            lambda: self.editor.setVisible(False))
+            # lambda: group_code.setVisible(False))
+            lambda: self.hide_wiget(self, group_code, htmltest))
+
 
         hlayout = QHBoxLayout()
         hlayout.addWidget(self.save_button)
@@ -255,6 +257,18 @@ class PropertiesWidget(QWidget):
         self.setLayout(vlayout)
 
         self.current_file = None
+
+    def hide_wiget(self, editor, html):
+        if editor.setVisible is True:
+            editor.setVisible(False)
+            html.setVisible(True)
+        else:
+            editor.setVisible(True)
+            html.setVisible(False)
+
+
+
+
 
     def set_item(self, check):
         self.current_file = check
