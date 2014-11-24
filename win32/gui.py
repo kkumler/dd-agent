@@ -525,7 +525,7 @@ class MainWindow(QSplitter):
 
         self.settings = [
             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
-            ("View Logs", lambda: self.properties.set_log_file(self.log_file))
+            ("View Logs", lambda: self.properties.set_log_file(self.log_file)),
             ("Agent Status", lambda: self.properties.display_status(self.properties.htmltest)),
         ]
 
