@@ -299,7 +299,7 @@ class PropertiesWidget(QWidget):
 
         # self.current_file = status
         # self.desc_label.setText(status.get_description())
-        # message = ""
+        message = ""
         try:
             message = message + self.load_status("CollectorStatus")
             message = message + self.load_status("DogstatsdStatus")
