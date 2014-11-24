@@ -234,6 +234,9 @@ class PropertiesWidget(QWidget):
         self.disable_button = QPushButton(get_icon("delete.png"),
                                       "Disable", self)
 
+        self.testbutton = QPushButton('test')
+        self.testbutton.clicked.connect(self.editor.setVisible(False))
+
         hlayout = QHBoxLayout()
         hlayout.addWidget(self.save_button)
         hlayout.addWidget(self.enable_button)
@@ -309,6 +312,13 @@ class PropertiesWidget(QWidget):
 
         message = a.render()
         return message
+
+    # def do_test(self):
+    #     if self.widget1.isHidden():
+    #         self.widget1.show()
+    #     else:
+    #         self.widget2.show()
+
 
 class testHTML(QTextEdit):
     def __init__(self, parent=None):
