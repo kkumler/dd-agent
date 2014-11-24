@@ -243,6 +243,7 @@ class PropertiesWidget(QWidget):
         hlayout.addWidget(self.save_button)
         hlayout.addWidget(self.enable_button)
         hlayout.addWidget(self.disable_button)
+        hlayout.addWidget(self.testbutton)
 
         vlayout = QVBoxLayout()
         vlayout.addWidget(group_desc)
