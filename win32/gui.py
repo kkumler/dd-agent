@@ -238,7 +238,7 @@ class PropertiesWidget(QWidget):
 
         self.connect(self.testbutton, SIGNAL("clicked()"),
             # lambda: group_code.setVisible(False))
-            lambda: self.hide_wiget(group_code, htmltest))
+            lambda: self.hide_wiget(self.editor, htmltest))
 
 
         hlayout = QHBoxLayout()
