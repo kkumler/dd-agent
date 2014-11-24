@@ -295,17 +295,20 @@ class PropertiesWidget(QWidget):
         self.enable_button.setEnabled(False)
         self.editor.go_to_line(len(log_file.content.splitlines()))
 
-    def display_status(self):
+    def display_status(self, html):
+
         # self.current_file = status
         # self.desc_label.setText(status.get_description())
         # message = ""
-        # try:
-        #     message = message + self.load_status("CollectorStatus")
-        #     message = message + self.load_status("DogstatsdStatus")
-        #     message = message + self.load_status("ForwarderStatus")
+        try:
+            message = message + self.load_status("CollectorStatus")
+            message = message + self.load_status("DogstatsdStatus")
+            message = message + self.load_status("ForwarderStatus")
 
-        # except Exception:
-        #     message = message + "========Unable to Show Status========"
+        except Exception:
+            message = message + "========Unable to Show Status========"
+
+        html.insertHtml(message)
 
         # self.editor.set_text(message)
         # status.content = self.editor.toPlainText().__str__()
@@ -523,7 +526,7 @@ class MainWindow(QSplitter):
         self.settings = [
             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
             ("View Logs", lambda: self.properties.set_log_file(self.log_file))
-            ("Agent Status", lambda: self.properties.display_status()),
+            ("Agent Status", lambda: self.properties.display_status(htmltest)),
         ]
 
         self.setting_menu = SettingMenu(self.settings)
