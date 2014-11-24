@@ -237,7 +237,7 @@ class PropertiesWidget(QWidget):
         self.testbutton = QPushButton('test')
 
         self.connect(self.testbutton, SIGNAL("clicked()"),
-            lambda: self.hide_widget(group_code, htmltest))
+            lambda: self.hide_widget(group_code, self.htmltest))
 
 
         hlayout = QHBoxLayout()
@@ -249,8 +249,8 @@ class PropertiesWidget(QWidget):
         vlayout = QVBoxLayout()
         vlayout.addWidget(group_desc)
         vlayout.addWidget(group_code)
-        htmltest = testHTML()
-        vlayout.addWidget(htmltest)
+        self.htmltest = testHTML()
+        vlayout.addWidget(self.htmltest)
 
         vlayout.addLayout(hlayout)
         self.setLayout(vlayout)
@@ -526,7 +526,7 @@ class MainWindow(QSplitter):
         self.settings = [
             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
             ("View Logs", lambda: self.properties.set_log_file(self.log_file))
-            ("Agent Status", lambda: self.properties.display_status(htmltest)),
+            ("Agent Status", lambda: self.properties.display_status(self.properties.htmltest)),
         ]
 
         self.setting_menu = SettingMenu(self.settings)
@@ -543,8 +543,6 @@ class MainWindow(QSplitter):
         Box.addWidget(self.menu_button)
         Box.addWidget(listwidget)
         holdingBox.setLayout(Box)
-
-        htmltest = testHTML()
 
         self.addWidget(holdingBox)
         self.addWidget(self.properties)
