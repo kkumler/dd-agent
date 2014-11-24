@@ -237,8 +237,7 @@ class PropertiesWidget(QWidget):
         self.testbutton = QPushButton('test')
 
         self.connect(self.testbutton, SIGNAL("clicked()"),
-            # lambda: group_code.setVisible(False))
-            lambda: self.hide_wiget(group_code, htmltest))
+            lambda: self.hide_widget(group_code, htmltest))
 
 
         hlayout = QHBoxLayout()
@@ -258,7 +257,7 @@ class PropertiesWidget(QWidget):
 
         self.current_file = None
 
-    def hide_wiget(self, editor, html):
+    def hide_widget(self, editor, html):
         if editor.isVisible():
             editor.setVisible(False)
             html.setVisible(True)
@@ -525,7 +524,7 @@ class MainWindow(QSplitter):
 
         self.settings = [
             ("Edit Agent Settings", lambda: self.properties.set_datadog_conf(datadog_conf)),
-            ("View Logs", lambda: self.properties.set_log_file(self.log_file)),
+            ("View Logs", lambda: self.properties.set_log_file(self.log_file), self.properties.hide_widget(self.properties.group_code, self.properties.htmltest))
             ("Agent Status", lambda: self.properties.display_status(self.status)),
         ]
 
