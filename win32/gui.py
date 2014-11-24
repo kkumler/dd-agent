@@ -235,7 +235,9 @@ class PropertiesWidget(QWidget):
                                       "Disable", self)
 
         self.testbutton = QPushButton('test')
-        self.testbutton.clicked.connect(self.editor.setVisible(False))
+
+        self.connect(self.testbutton, SIGNAL("clicked()"),
+            lambda: self.editor.setVisible(False))
 
         hlayout = QHBoxLayout()
         hlayout.addWidget(self.save_button)
