@@ -258,7 +258,7 @@ class PropertiesWidget(QWidget):
 
         self.current_file = None
 
-    def hide_wiget(editor, html):
+    def hide_wiget(self, editor, html):
         if editor.setVisible is True:
             editor.setVisible(False)
             html.setVisible(True)
